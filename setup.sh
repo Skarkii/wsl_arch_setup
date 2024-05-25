@@ -66,8 +66,7 @@ alias vim='nvim'
 
 # Windows commands
 alias explorer='explorer.exe'
-
-alias ssh-restart='eval $(ssh-agent)'
+#alias clip='clip.exe'
 
 PS1='\[\033[00;32m\]\u@\h\[\033[01;37m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 
@@ -90,5 +89,21 @@ unset bashrc_file
 unset custom_commands_file
 
 # TODO: Add automatic SSH creaton for github
+
+read -p "Do you want to create ssh files? (y/n): " answer
+
+if [[ "$answer" =~ ^[Nn]$ ]]; then
+    echo ""
+elif [[ "$answer" =~ ^[Yy]$ ]]; then
+    # Create ssh config file
+    mkdir -p ~/.ssh
+    touch ~/.ssh/config
+    echo 'AddKeysToAgent yes
+# Example of adding a key
+# IdentityFile ~/.ssh/github
+' > ~/.ssh/config
+else
+	echo "Invalid input. Please enter y or n."
+fi
 
 echo "Restart your terminal to ensure everything gets updated correctly!"
