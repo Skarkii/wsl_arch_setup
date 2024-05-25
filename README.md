@@ -1,6 +1,6 @@
 # wsl_arch_setup
 
-This is my a script that sets up Arch Linux WSL with the configuration I want.
+This is a script that sets up Arch Linux WSL with the configuration I want.
 
 Currently is has the following functions:
 - Installing lots of commonly used packages
