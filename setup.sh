@@ -56,6 +56,7 @@ HISTFILESIZE=2000
 # ls commands
 alias ls='ls --color=auto'
 alias la='ls -a'
+alias ll='ls -l'
 
 # grep commands
 alias grep='grep --color=auto'
@@ -88,9 +89,8 @@ source $bashrc_file
 unset bashrc_file
 unset custom_commands_file
 
-# TODO: Add automatic SSH creaton for github
-
-read -p "Do you want to create ssh files? (y/n): " answer
+echo 'Make sure to not have the file ~/.ssh/github as it will be replaced'
+read -p "Do you want to create github ssh key?(y/n): " answer
 
 if [[ "$answer" =~ ^[Nn]$ ]]; then
     echo ""
@@ -101,9 +101,27 @@ elif [[ "$answer" =~ ^[Yy]$ ]]; then
     echo 'AddKeysToAgent yes
 # Example of adding a key
 # IdentityFile ~/.ssh/github
+IdentityFile ~/.ssh/github
 ' > ~/.ssh/config
+ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/github
+echo 'run cat ~/.ssh/github.pub | CLIP.exe and add to https://github.com/settings/ssh/new'
 else
 	echo "Invalid input. Please enter y or n."
 fi
+
+read -p "Do you want to setup neovim (https://github.com/Skarkii/neovim_repo)?(y/n): " answer
+
+if [[ "$answer" =~ ^[Nn]$ ]]; then
+    echo ""
+elif [[ "$answer" =~ ^[Yy]$ ]]; then
+mkdir -p ~/.local/share/nvim/site/pack/packer/start/
+git clone --depth 1 https://github.com/wbthomason/packer.nvim/ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+
+mkdir -p ~/.config/nvim
+git clone https://github.com/Skarkii/neovim_repo ~/.config/nvim
+else
+	echo "Invalid input. Please enter y or n."
+fi
+unset answer
 
 echo "Restart your terminal to ensure everything gets updated correctly!"
