@@ -30,6 +30,8 @@ sudo pacman -S --needed \
   clang \
   unzip \
   npm \
+  tmux \
+  xclip \
 
 # remove the contents of bashrc
 truncate -s 0 "$bashrc_file"
@@ -53,6 +55,9 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+# cd commands
+alias ..='cd ..'
+
 # ls commands
 alias ls='ls --color=auto'
 alias la='ls -a'
@@ -65,9 +70,12 @@ alias grep='grep --color=auto'
 alias vi='nvim'
 alias vim='nvim'
 
-# Windows commands
+# Windows commands (if running wsl)
 alias explorer='explorer.exe'
-#alias clip='clip.exe'
+alias clip='clip.exe'
+
+# Xclip
+alias xclip='xclip -sel clip'
 
 PS1='\[\033[00;32m\]\u@\h\[\033[01;37m\]:\[\033[01;34m\]\w\[\033[00m\]$ '
 
@@ -104,7 +112,7 @@ elif [[ "$answer" =~ ^[Yy]$ ]]; then
 IdentityFile ~/.ssh/github
 ' > ~/.ssh/config
 ssh-keygen -t rsa -b 4096 -N "" -f ~/.ssh/github
-echo 'run cat ~/.ssh/github.pub | CLIP.exe and add to https://github.com/settings/ssh/new'
+echo 'run cat ~/.ssh/github.pub | xclip -sel clip and add the key to https://github.com/settings/ssh/new'
 else
 	echo "Invalid input. Please enter y or n."
 fi
